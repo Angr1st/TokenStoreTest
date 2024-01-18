@@ -1,4 +1,4 @@
-use axum::{response::Html, routing::get, Router};
+use axum::{routing::get, Router};
 use uuid::Uuid;
 
 #[tokio::main]
