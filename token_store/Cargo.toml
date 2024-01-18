@@ -1,5 +1,5 @@
 [package]
-name = "TokenStore"
+name = "token_store"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,4 +7,5 @@ edition = "2021"
 
 [dependencies]
 axum = "0.7.4"
+reqwest = "0.11.23"
 tokio = { version = "1.35.1", features = ["full"] }

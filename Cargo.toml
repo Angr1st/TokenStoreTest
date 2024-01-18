@@ -2,6 +2,6 @@
 resolver = "2"
 
 members = [
-  "TokenStore",
-  "TokenCreator"
+  "token_store",
+  "token_creator"
 ]
