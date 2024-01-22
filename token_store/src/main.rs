@@ -10,17 +10,18 @@ async fn echo(req_body: String) -> impl Responder {
     HttpResponse::Ok().body(req_body)
 }
 
-async fn manual_hello() -> impl Responder {
-    HttpResponse::Ok().body("Hey there!")
+#[get("/token/{user_id}")]
+async fn request_user_token(path: web::Path<u32>) -> impl Responder {
+    HttpResponse::Ok().body(path.to_string())
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
+            .service(request_user_token)
             .service(hello)
             .service(echo)
-            .route("/hey", web::get().to(manual_hello))
     })
     .bind(("127.0.0.1", 8080))?
     .run()
