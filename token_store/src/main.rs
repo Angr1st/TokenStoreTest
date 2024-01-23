@@ -12,7 +12,13 @@ async fn echo(req_body: String) -> impl Responder {
 
 #[get("/token/{user_id}")]
 async fn request_user_token(path: web::Path<u32>) -> impl Responder {
-    HttpResponse::Ok().body(path.to_string())
+    let resp = reqwest::get(format!("http://localhost:3000/token/{}", path))
+        .await
+        .unwrap()
+        .text()
+        .await
+        .unwrap();
+    HttpResponse::Ok().body(resp)
 }
 
 #[actix_web::main]
