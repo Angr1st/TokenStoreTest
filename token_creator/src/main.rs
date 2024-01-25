@@ -5,7 +5,7 @@ use axum::{
     routing::get,
     Json, Router,
 };
-use chrono::{DateTime, Duration, Utc};
+use chrono::{DateTime, Utc};
 use serde::Serialize;
 use tokio::sync::Mutex;
 use uuid::Uuid;
