@@ -9,4 +9,5 @@ edition = "2021"
 actix-web = "4.4.1"
 axum = "0.7.4"
 reqwest = "0.11.23"
+token_common = { version = "0.1.0", path = "../token_common" }
 tokio = { version = "1.35.1", features = ["full"] }

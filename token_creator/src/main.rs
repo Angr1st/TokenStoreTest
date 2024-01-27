@@ -5,8 +5,8 @@ use axum::{
     routing::get,
     Json, Router,
 };
-use chrono::{DateTime, Utc};
-use serde::Serialize;
+use chrono::Utc;
+use token_common::Token;
 use tokio::sync::Mutex;
 use uuid::Uuid;
 
@@ -63,38 +63,4 @@ async fn handler(Path(_user_id): Path<u32>, State(state): State<AppState>) -> Js
 #[derive(Clone)]
 struct AppState {
     user_tokens: Arc<Mutex<HashMap<u32, Token>>>,
-}
-
-#[derive(Serialize, Clone)]
-struct Token {
-    created: DateTime<Utc>,
-    expires_in: u64,
-    user_id: u32,
-    value: String,
-}
-
-impl Token {
-    fn new(user_id: u32, token_value: String) -> Self {
-        Self {
-            created: Utc::now(),
-            expires_in: 3600,
-            user_id,
-            value: token_value,
-        }
-    }
-
-    fn expiration_duration(&self) -> chrono::Duration {
-        chrono::Duration::seconds(
-            self.expires_in
-                .try_into()
-                .expect("3600 seconds should always work."),
-        )
-    }
-
-    fn compute_expiry_date(&self) -> DateTime<Utc> {
-        let expiration_duration = self.expiration_duration();
-        self.created
-            .checked_add_signed(expiration_duration)
-            .expect("This should always return a valid DateTime!")
-    }
 }

@@ -4,4 +4,4 @@ resolver = "2"
 members = [
   "token_store",
   "token_creator"
-]
+, "token_common"]
