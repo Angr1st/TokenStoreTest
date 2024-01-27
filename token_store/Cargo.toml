@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 actix-web = "4.4.1"
 axum = "0.7.4"
-reqwest = "0.11.23"
+chrono = { version = "0.4.33", features = ["serde"] }
+reqwest = { version = "0.11.23", features = ["json"] }
 token_common = { version = "0.1.0", path = "../token_common" }
 tokio = { version = "1.35.1", features = ["full"] }

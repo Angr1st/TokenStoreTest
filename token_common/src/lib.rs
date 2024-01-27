@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Clone)]
+#[derive(Deserialize, Serialize, Clone)]
 pub struct Token {
     created: DateTime<Utc>,
     expires_in: u64,
