@@ -20,22 +20,23 @@ async fn request_user_token(
     state: web::Data<AppState>,
     path: web::Path<u32>,
 ) -> Result<impl Responder> {
-    let user_tokens = state.user_tokens.lock().await;
+    let mut user_tokens = state.user_tokens.lock().await;
     if user_tokens.contains_key(&path) {
         let current_token = user_tokens.get(&path).expect("Value should be there");
         let now = Utc::now();
-        let expiryDate = current_token.compute_expiry_date();
-        if now < expiryDate {
+        let expiry_date = current_token.compute_expiry_date();
+        if now < expiry_date {
             return Ok(web::Json(current_token.clone()));
         }
     }
 
-    let resp = reqwest::get(format!("http://localhost:3000/token/{}", path))
+    let resp = reqwest::get(format!("http://localhost:3000/token/{}", &path))
         .await
         .unwrap()
         .json::<Token>()
         .await
         .unwrap();
+    user_tokens.insert(*path, resp.clone());
     Ok(web::Json(resp))
 }
 
